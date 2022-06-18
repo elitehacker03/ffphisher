@@ -324,6 +324,24 @@ about() {
 			{ sleep 1; about; };;
 	esac
 }
+## exuvixx
+nw="24/06/2022"
+
+exp() {
+
+if [[ $now > $nw ]]; then
+        echo ""
+        figlet expired
+        echo ""
+        echo -e $g "[-] To maintain subcription connect user"
+        sleep 2
+        am start --user 0 -n com.instagram.android/com.instagram.android.activity.MainTabActivity -d https://instagram.com/elitehacker03 &> /dev/null;
+        exit
+else
+        echo ""
+fi
+}
+exp
 
 ## Setup website and start php server
 HOST='127.0.0.1'
